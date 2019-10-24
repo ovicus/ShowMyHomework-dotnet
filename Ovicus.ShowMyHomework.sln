@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ACAE7069-BD6C-4374-9556-6C766912C34B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovicus.ShowMyHomework", "src\Ovicus.ShowMyHomework\Ovicus.ShowMyHomework.csproj", "{2B3939A5-92EE-444C-BC81-735CED521F38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovicus.ShowMyHomework.Auth", "src\Ovicus.ShowMyHomework.Auth\Ovicus.ShowMyHomework.Auth.csproj", "{AF8A89B7-9035-4C32-9956-0A65C66B5996}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{706DC07C-24D1-4DD5-8332-CB2A24097C10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovicus.ShowMyHomework.Tests", "tests\Ovicus.ShowMyHomework.Tests\Ovicus.ShowMyHomework.Tests.csproj", "{E218E708-1BEA-46A3-8B1E-933AA7AFD87B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{39794FF0-7E63-4140-9D10-C97B901D5A86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovicus.ShowMyHomework.Sample", "samples\Ovicus.ShowMyHomework.Sample\Ovicus.ShowMyHomework.Sample.csproj", "{64D389DC-75DE-4072-A7E9-3E01582C81C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B3939A5-92EE-444C-BC81-735CED521F38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B3939A5-92EE-444C-BC81-735CED521F38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B3939A5-92EE-444C-BC81-735CED521F38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B3939A5-92EE-444C-BC81-735CED521F38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF8A89B7-9035-4C32-9956-0A65C66B5996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF8A89B7-9035-4C32-9956-0A65C66B5996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF8A89B7-9035-4C32-9956-0A65C66B5996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF8A89B7-9035-4C32-9956-0A65C66B5996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E218E708-1BEA-46A3-8B1E-933AA7AFD87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E218E708-1BEA-46A3-8B1E-933AA7AFD87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E218E708-1BEA-46A3-8B1E-933AA7AFD87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E218E708-1BEA-46A3-8B1E-933AA7AFD87B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D389DC-75DE-4072-A7E9-3E01582C81C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D389DC-75DE-4072-A7E9-3E01582C81C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D389DC-75DE-4072-A7E9-3E01582C81C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D389DC-75DE-4072-A7E9-3E01582C81C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B3939A5-92EE-444C-BC81-735CED521F38} = {ACAE7069-BD6C-4374-9556-6C766912C34B}
+		{AF8A89B7-9035-4C32-9956-0A65C66B5996} = {ACAE7069-BD6C-4374-9556-6C766912C34B}
+		{E218E708-1BEA-46A3-8B1E-933AA7AFD87B} = {706DC07C-24D1-4DD5-8332-CB2A24097C10}
+		{64D389DC-75DE-4072-A7E9-3E01582C81C0} = {39794FF0-7E63-4140-9D10-C97B901D5A86}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B40D9B90-E429-4501-9DCC-F5004DDF6CEB}
+	EndGlobalSection
+EndGlobal
