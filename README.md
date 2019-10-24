@@ -1,4 +1,7 @@
 # ShowMyHomework .NET Core Library
+
+[![Build Status](https://travis-ci.com/ovicus/ShowMyHomework-dotnet.svg?branch=master)](https://travis-ci.com/ovicus/ShowMyHomework-dotnet)
+
 This library allows using ShowMyHomework.co.uk API to retrieve assigned tasks.
 
 ## Disclaimer
