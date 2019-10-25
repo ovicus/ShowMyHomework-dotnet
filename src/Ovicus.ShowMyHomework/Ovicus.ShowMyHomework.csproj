@@ -1,7 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyName>Ovicus.ShowMyHomework</AssemblyName>
+    <PackageId>Ovicus.ShowMyHomework</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>Lester Sanchez</Authors>
+    <Company>Ovicus</Company>
+    <Description>A simple .NET Standard library to use ShowMyHomework API.</Description>
+    <PackageProjectUrl>https://github.com/ovicus/ShowMyHomework-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ovicus/ShowMyHomework-dotnet</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
