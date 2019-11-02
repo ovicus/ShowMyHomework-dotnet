@@ -44,6 +44,17 @@ if (isAuthenticated)
 
 You must call the `Authenticate()` method with a valid `username`, `password` and `schoolId`. 
 
+You can use the utility method `FindSchools()` to find out the `schoolId`.
+
+```csharp
+var schoolName = "Kingsdale";
+var school = (await authService.FindSchools(schoolName)).FirstOrDefault();
+if(school != null)
+{
+    var schoolId = school.Id;
+}
+```
+
 ## Disclaimer
 This library is not supported by ShowMyHomework.co.uk and is just the result of his author understanding about how the ShowMyHomework API works, 
 from observing its interactions with the public website. There is no public documentation about the API and it can change any time

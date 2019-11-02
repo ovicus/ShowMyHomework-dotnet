@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Ovicus.ShowMyHomework.Auth.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -11,7 +13,7 @@ namespace Ovicus.ShowMyHomework.Auth
     public interface IAuthenticationService
     {
         Task<string> GetAccessToken();
-        Task<bool> Authenticate(string username, string password, string schoolId);
+        Task<bool> Authenticate(string username, string password, long schoolId);
     }
 
     public class AuthenticationService : IAuthenticationService
@@ -42,7 +44,7 @@ namespace Ovicus.ShowMyHomework.Auth
         {
         }
 
-        public async Task<bool> Authenticate(string username, string password, string schoolId)
+        public async Task<bool> Authenticate(string username, string password, long schoolId)
         {
             // Get new token with grant_type=password
             var requestUrl = $"/oauth/token?client_id={OAuthClientId}&client_secret={OAuthClientSecret}";
@@ -50,7 +52,7 @@ namespace Ovicus.ShowMyHomework.Auth
 
             var keyValues = new List<KeyValuePair<string, string>>();
             keyValues.Add(new KeyValuePair<string, string>("grant_type", "password"));
-            keyValues.Add(new KeyValuePair<string, string>("school_id", schoolId));
+            keyValues.Add(new KeyValuePair<string, string>("school_id", schoolId.ToString()));
             keyValues.Add(new KeyValuePair<string, string>("username", username));
             keyValues.Add(new KeyValuePair<string, string>("password", password));
 
@@ -99,6 +101,16 @@ namespace Ovicus.ShowMyHomework.Auth
             _currentToken = JsonConvert.DeserializeObject<AuthToken>(json);
 
             return _currentToken;
+        }
+
+        public async Task<IEnumerable<School>> FindSchools(string filterName)
+        {
+            var url = $"/api/public/school_search?filter={filterName}&limit=20";
+            var response = await _client.GetAsync(url);
+            var json = await response.EnsureSuccessStatusCode().Content.ReadAsStringAsync();
+            JObject root = JObject.Parse(json);
+            var schools = root.SelectToken("schools").ToObject<School[]>();
+            return schools.Where(s => s.IsActive);
         }
     }
 }

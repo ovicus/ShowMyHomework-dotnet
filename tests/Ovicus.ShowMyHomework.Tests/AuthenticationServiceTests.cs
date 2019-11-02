@@ -14,7 +14,94 @@ namespace Ovicus.ShowMyHomework.Tests
     public class AuthenticationServiceTests
     {
         private const string ApiBaseUrl = "https://api.showmyhomework.co.uk";
-        
+
+        [Fact]
+        public async Task When_FindSchoolsCalledWithValidFilter_Then_ActiveMatchingSchoolsShouldBeReturned()
+        {
+            // ARRANGE
+            string responseBody = "{" +
+                 "\"schools\": [" +
+                     "{" +
+                         "\"id\": 1234," +
+                         "\"name\": \"Kings Langley School\"," +
+                         "\"address\": \"Love Lane, Hertfordshire\"," +
+                         "\"town\": \"Kings Langley\"," +
+                         "\"post_code\": \"WD4 9HN\"," +
+                         "\"subdomain\": \"kingslangley\"," +
+                         "\"is_active\": true," +
+                     "}," +
+                     "{" +
+                         "\"id\": 1235," +
+                         "\"name\": \"Kingsley Academy\"," +
+                         "\"address\": \"Cecil Road\"," +
+                         "\"town\": \"Hounslow\"," +
+                         "\"post_code\": \"TW3 1AX\"," +
+                         "\"subdomain\": \"kingsleyacademy\"," +
+                         "\"is_active\": false," +
+                     "}," +
+                     "{ " +
+                         "\"id\": 1236," +
+                         "\"name\": \"Kingsdale Foundation School\"," +
+                         "\"address\": \"Alleyn Park, Dulwich\"," +
+                         "\"town\": \"London\"," +
+                         "\"post_code\": \"SE21 8SQ\"," +
+                         "\"subdomain\": \"kingsdale\"," +
+                         "\"is_active\": true," +
+                     "}]}";
+
+            Mock<HttpMessageHandler> handlerMock = MockHttpMessageHandlerBuilder.Build(responseBody, HttpStatusCode.OK);
+            // use real http client with mocked handler here
+            HttpClient httpClient = new HttpClient(handlerMock.Object);
+
+            var sut = new AuthenticationService(ApiBaseUrl, httpClient);
+
+            // ACT
+            var result = await sut.FindSchools("Kings");
+
+            // ASSERT
+            result.Should().NotBeNull();
+            result.Should().HaveCount(2);
+            result.Should().OnlyContain(s => s.IsActive);
+
+            handlerMock.Protected().Verify(
+               "SendAsync",
+               Times.Exactly(1), // we expected a single external request
+               ItExpr.Is<HttpRequestMessage>(req =>
+                  req.Method == HttpMethod.Get  // we expected a POST request
+               ),
+               ItExpr.IsAny<CancellationToken>()
+            );
+        }
+
+        [Fact]
+        public async Task When_FindSchoolsCalledWithInvalidFilter_Then_ShouldReturnNoResults()
+        {
+            // ARRANGE
+            string responseBody = "{ \"schools\": [] }";
+
+            Mock<HttpMessageHandler> handlerMock = MockHttpMessageHandlerBuilder.Build(responseBody, HttpStatusCode.OK);
+            // use real http client with mocked handler here
+            HttpClient httpClient = new HttpClient(handlerMock.Object);
+
+            var sut = new AuthenticationService(ApiBaseUrl, httpClient);
+
+            // ACT
+            var result = await sut.FindSchools("NonExistantSchoolName");
+
+            // ASSERT
+            result.Should().NotBeNull();
+            result.Should().BeEmpty();
+
+            handlerMock.Protected().Verify(
+               "SendAsync",
+               Times.Exactly(1), // we expected a single external request
+               ItExpr.Is<HttpRequestMessage>(req =>
+                  req.Method == HttpMethod.Get  // we expected a POST request
+               ),
+               ItExpr.IsAny<CancellationToken>()
+            );
+        }
+
         [Fact]
         public async Task When_ValidCredentialsAreProvided_Then_AuthenticationSucceedAndAccessTokenCreated()
         {
@@ -38,7 +125,7 @@ namespace Ovicus.ShowMyHomework.Tests
             var sut = new AuthenticationService(ApiBaseUrl, httpClient);
 
             // ACT
-            var result = await sut.Authenticate("username", "$3cret", "1234");
+            var result = await sut.Authenticate("username", "$3cret", 1234);
             var token = await sut.GetAccessToken();
 
             // ASSERT
@@ -69,7 +156,7 @@ namespace Ovicus.ShowMyHomework.Tests
             var sut = new AuthenticationService(ApiBaseUrl, httpClient);
 
             // ACT
-            var result = await sut.Authenticate("username", "inv@lidPass", "1234");
+            var result = await sut.Authenticate("username", "inv@lidPass", 1234);
 
             // ASSERT
             result.Should().BeFalse();
@@ -139,7 +226,7 @@ namespace Ovicus.ShowMyHomework.Tests
             // This will make a request to the authentication endpoint and retrieve the (expired) token
             // This method does not check the validity of the token, just simply trust
             // the authentication server will issue a valid token on successful authentication
-            var authResult = await sut.Authenticate("username", "$3cret", "1234");
+            var authResult = await sut.Authenticate("username", "$3cret", 1234);
 
             // ARRANGE (2nd stage)
             

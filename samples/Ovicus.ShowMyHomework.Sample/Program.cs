@@ -1,5 +1,6 @@
 ﻿using Ovicus.ShowMyHomework.Auth;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ovicus.ShowMyHomework.Sample
@@ -16,21 +17,31 @@ namespace Ovicus.ShowMyHomework.Sample
             {
                 var authService = new AuthenticationService();
 
-                Console.Write("Enter School Id: ");
-                var schoolId = Console.ReadLine();
+                Console.Write("Enter School Name: ");
+                var schoolName = Console.ReadLine();
 
-                Console.Write("Enter Username: ");
-                var username = Console.ReadLine();
+                var school = (await authService.FindSchools(schoolName)).FirstOrDefault();
 
-                Console.Write("Enter Password: ");
-                var password = Console.ReadLine();
-
-                bool isAuthenticated = await authService.Authenticate(username, password, schoolId);
-
-                if (isAuthenticated)
+                if (school != null)
                 {
-                    accessToken = await authService.GetAccessToken();
-                    await PrintTodos(accessToken);
+
+                    Console.Write("Enter Username: ");
+                    var username = Console.ReadLine();
+
+                    Console.Write("Enter Password: ");
+                    var password = Console.ReadLine();
+
+                    bool isAuthenticated = await authService.Authenticate(username, password, school.Id);
+
+                    if (isAuthenticated)
+                    {
+                        accessToken = await authService.GetAccessToken();
+                        await PrintTodos(accessToken);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"School not found: {schoolName}");
                 }
             }
             else
